@@ -1,8 +1,8 @@
 # Debian Linux Handbook
 
 - Written by: KairanD.
-- Version: 1.0.0.
-- Date: 2026/07/29.
+- Version: 1.1.1.
+- Date: 2026/08/08.
 - GNOME version: 48.
 - License: CC BY-SA 4.0. You may share and adapt the content with attribution, and derivative works must be released under the same license.
 
@@ -36,7 +36,7 @@ After booting, choose "graphical expert install". Follow the instructions below 
 11. **Install base system:** just hit enter using the defaults and wait.
 12. **Configure the package manager:** select to use non-free firmwares and non-free applications. Don't activate APT source repositories.
 13. **Select and install software:** use the spacebar to keep only default system utilitaries active.
-14. **Install bootloader:** if your computer has a AMD64 UEFI (almost always the case for computers released after 2012), choose systemd-boot. For computers with mixed-mode UEFI (x86 UEFI with x64 processor), such as the Asus T100TA, choose GRUB.
+14. **Install bootloader:** if your computer has an AMD64 UEFI (almost always the case for computers released after 2012), choose systemd-boot. For computers with mixed-mode UEFI (x86 UEFI with x64 processor), such as the Asus T100TA, choose GRUB.
 15. **Finish the installation:** keep the defaults and continue.
 
 ### Installing the desktop environment and basic packages
@@ -45,9 +45,9 @@ After rebooting, the system will enter CLI mode. Enter your username and passwor
 ```
 sudo apt update && sudo apt upgrade
 ```
-Then install GNOME, a tweaks application, an extension to show tray icons and Flatpak support (including a software store plugin):
+Then install a CLI system information tool, GNOME, a tweaks application, an extension to show tray icons, and Flatpak support (including a software store plugin):
 ```
-sudo apt install gnome-core gnome-tweaks gnome-shell-extension-appindicator gnome-software-plugin-flatpak
+sudo apt install fastfetch gnome-core gnome-tweaks gnome-shell-extension-appindicator gnome-software-plugin-flatpak
 ```
 To have a dock, install the Dash to Dock extension:
 ```
@@ -155,7 +155,6 @@ These are the essential applications I always install on my computers.
 * LibreOffice (The Document Foundation): complete office suite.
 * Mission Center (Mission Center Developers): shows usage of system resources and open processes.
 * Rhythmbox (The Rhythmbox developers): complete music player for local files.
-* Solanum (Christopher Davis): pomodoro tracker to help with your tasks.
 
 ### Other Flatpaks
 
@@ -165,7 +164,9 @@ These are other applications I use.
 * Bottles (The Bottles Contributors): wine prefixes manager.
 * Boxes (The GNOME Project): virtual machines manager.
 * Chromium (The Chromium Authors): alternative web browser.
+* Descodificador (Bilal Elmoussaoui): reads and generates QR codes.
 * Discord (Discord Inc.): Discord client.
+* Earbud manager for Galaxy Buds (Tim Schneeberger): audio manager for Samsung's Galaxy Buds.
 * Fragments (Felix Häcker): torrent downloader and manager.
 * GitHub Desktop (shiftkey): unofficial GitHub Linux client.
 * Godots (Maxim Kovkel): manager for multiple versions of the Godot game engine editor.
@@ -178,6 +179,7 @@ These are other applications I use.
 * OpenRGB (Adam Honse, OpenRGB Team): manages RGB devices.
 * PDF Arranger (The PDF Arranger team): edits and resizes PDF files.
 * Protontricks (Janne Pulkkinen): software to manage Steam's Proton game prefixes.
+* Solanum (Christopher Davis): pomodoro tracker to help with your tasks.
 * SoundConverter (Gautier Portet): multi format audio files converter.
 * Steam (Valve Corporation): Steam client.
 * Steam Link (Valve Corporation): application to receive straming signal from a Steam client.
@@ -247,8 +249,17 @@ MANGOHUD=1 MANGOHUD_CONFIG="fps,frametime,cpu_stats,cpu_temp,gpu_stats,gpu_temp,
 ```
 To limit the maximum FPS rate in a game (for this example, 75 FPS), add to MangoHUD:
 ```
-MANGOHUD=1 MANGOHUD_CONFIG="fps_limit=75" %command%
+MANGOHUD=1 MANGOHUD_CONFIG="fps_limit=100" %command%
 ```
+Sometimes, the software store may install a MangoHUD version that has a runtime that differs from Steam's. This will prevent MangoHUD from working. To solve, first check the Steam runtime version:
+```
+flatpak info com.valvesoftware.Steam | grep Runtime
+```
+The last numbers (for example, 25.08) are the runtime. Then install a correct version of MangoHUD using the terminal application:
+```
+flatpak install org.freedesktop.Platform.VulkanLayer.MangoHud
+```
+Choose the number that matches the runtime used by Steam. In the future, it may be necessary to do this procedure again after Steam updates its runtime.
 
 #### Steam Link
 
@@ -258,7 +269,7 @@ To use joysticks, it is necessary to install the steam-devices package as descri
 
 Some versions of the Unity Editor crash when loading a project. It is necessary to add a file. Search for the "Data" folder on your Editor install folder (generally located in /home/$USER/Unity). Then rename the original "bee_backend" file as "bee_backend_real" and copy the "bee_backend" file provided in the "resources" folder within this repository. It should be marked as executable.
 
-#### VSCodium:
+#### VSCodium
 
 Go to settings, window and "auto detect color scheme" to enable light and dark theme switching.
 
@@ -286,7 +297,7 @@ Open the WiVRn server on your computer and it will appear on the headset's clien
 
 ### System
 
-- **System:** on screen tab, configure screen resolution and frequency (activate variable refresh rate if available) and activate night light (reducing the intensity to the first level). If you have more than one screen, move the numbered windows until they are in a great position. On energy tab, disable automatic screen turnoff, disable automatic suspension when connected to an outlet, and activate battery percentage show. On multitasking, disable the active corner and choose to show applications only from the current workspace. On appearance, change the wallpaper. On applications, set Firefox as the default browser. On mouse and touchpad, disable mouse acceleration and configure sensibility as wanted. On system, activate the option to show the week day and change the name and picture of your user.
+- **System:** on screen tab, configure screen resolution and frequency (activate variable refresh rate if available) and activate night light (reducing the intensity to the first level). If you have more than one screen, move the numbered windows until they are in a great position. On energy tab, disable automatic screen turnoff, disable automatic suspension when connected to an outlet, and activate battery percentage show. On multitasking, disable the active corner and choose to show applications only from the current workspace. On appearance, change the wallpaper. On mouse and touchpad, disable mouse acceleration and configure sensibility as wanted. On system, activate the option to show the week day and change the name and picture of your user.
 - **General:** on the show applications view, sort your apps by alphabetical order. At the upper menu, click the clock, look for meteorology and choose your city.
 - **Adjustments:** on the Adjustments application, choose 0,90 as font scaling. Go to the "Windows" tab and activate maximize and minimize buttons.
 - **Dash to Dock:** position and size: disable autohide, choose size 36. Launchers: disable the options to show volumns and the recycling bin. Behavior: change the click action to "minimize or show previews", choose "alternate workspace" as rolling action. Appearance: activate the compact dock option, disable the option to show general view at boot, choose points as the window counting indicators with dominant color, change the dock color to black and fix opacity on 80%.
