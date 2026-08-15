@@ -1,8 +1,8 @@
 # Debian Linux Handbook
 
 - Written by: KairanD.
-- Version: 1.1.1.
-- Date: 2026/08/08.
+- Version: 1.1.2.
+- Date: 2026/08/15.
 - GNOME version: 48.
 - License: CC BY-SA 4.0. You may share and adapt the content with attribution, and derivative works must be released under the same license.
 
@@ -109,7 +109,7 @@ First, download Extension Manager (Matthew Jakeman) from the Software applicatio
 
 If you're using a laptop, then you probably already have the brightness control active at the top right corner of your screen. However, for desktop users, it is currently necessary to use an extension. Browse and install "Brightness control using ddcutil" (themightydeity). Now open the Console application and do:
 ```
-sudo pacman -S ddcutil
+sudo apt install ddcutil
 sudo modprobe i2c-dev
 sudo cp /usr/share/ddcutil/data/60-ddcutil-i2c.rules /etc/udev/rules.d
 sudo usermod $USER -aG i2c
@@ -155,6 +155,7 @@ These are the essential applications I always install on my computers.
 * LibreOffice (The Document Foundation): complete office suite.
 * Mission Center (Mission Center Developers): shows usage of system resources and open processes.
 * Rhythmbox (The Rhythmbox developers): complete music player for local files.
+* VLC (VideoLAN et al.): the universal media player, with amazing compatibility.
 
 ### Other Flatpaks
 
@@ -164,10 +165,11 @@ These are other applications I use.
 * Bottles (The Bottles Contributors): wine prefixes manager.
 * Boxes (The GNOME Project): virtual machines manager.
 * Chromium (The Chromium Authors): alternative web browser.
-* Descodificador (Bilal Elmoussaoui): reads and generates QR codes.
+* Descodificator (Bilal Elmoussaoui): reads and generates QR codes.
 * Discord (Discord Inc.): Discord client.
 * Earbud manager for Galaxy Buds (Tim Schneeberger): audio manager for Samsung's Galaxy Buds.
 * Fragments (Felix Häcker): torrent downloader and manager.
+* Galaxy Buds Manager (Tim Schneeberger): software for configuring Galaxy Buds specific features.
 * GitHub Desktop (shiftkey): unofficial GitHub Linux client.
 * Godots (Maxim Kovkel): manager for multiple versions of the Godot game engine editor.
 * HydraPaper (Gabriele Musco): selection of different wallpapers for multiple monitors.
@@ -249,7 +251,7 @@ MANGOHUD=1 MANGOHUD_CONFIG="fps,frametime,cpu_stats,cpu_temp,gpu_stats,gpu_temp,
 ```
 To limit the maximum FPS rate in a game (for this example, 75 FPS), add to MangoHUD:
 ```
-MANGOHUD=1 MANGOHUD_CONFIG="fps_limit=100" %command%
+MANGOHUD=1 MANGOHUD_CONFIG="fps_limit=75" %command%
 ```
 Sometimes, the software store may install a MangoHUD version that has a runtime that differs from Steam's. This will prevent MangoHUD from working. To solve, first check the Steam runtime version:
 ```
