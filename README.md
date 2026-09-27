@@ -1,8 +1,8 @@
 # Debian Linux Handbook
 
 - Written by: KairanD.
-- Version: 1.1.2.
-- Date: 2026/08/15.
+- Version: 1.1.3.
+- Date: 2026/09/27.
 - GNOME version: 48.
 - License: CC BY-SA 4.0. You may share and adapt the content with attribution, and derivative works must be released under the same license.
 
@@ -36,7 +36,7 @@ After booting, choose "graphical expert install". Follow the instructions below 
 11. **Install base system:** just hit enter using the defaults and wait.
 12. **Configure the package manager:** select to use non-free firmwares and non-free applications. Don't activate APT source repositories.
 13. **Select and install software:** use the spacebar to keep only default system utilitaries active.
-14. **Install bootloader:** if your computer has an AMD64 UEFI (almost always the case for computers released after 2012), choose systemd-boot. For computers with mixed-mode UEFI (x86 UEFI with x64 processor), such as the Asus T100TA, choose GRUB.
+14. **Install bootloader:** if your computer has an AMD64 UEFI (almost always the case for computers released after 2012), choose systemd-boot. For computers with mixed-mode UEFI (x86 UEFI with x64 processor), such as the Asus T100TA, choose GRUB. If you chose GRUB, select to don't execute os-prober automatically, to update the NVRAM variables and to force GRUB to the removable media path.
 15. **Finish the installation:** keep the defaults and continue.
 
 ### Installing the desktop environment and basic packages
@@ -165,6 +165,8 @@ These are other applications I use.
 * Bottles (The Bottles Contributors): wine prefixes manager.
 * Boxes (The GNOME Project): virtual machines manager.
 * Chromium (The Chromium Authors): alternative web browser.
+* Dconf Editor (GNOME Project): edit hidden system options.
+* Deep Dive (Tanay Bhomia): complete pomodoro timer.
 * Descodificator (Bilal Elmoussaoui): reads and generates QR codes.
 * Discord (Discord Inc.): Discord client.
 * Earbud manager for Galaxy Buds (Tim Schneeberger): audio manager for Samsung's Galaxy Buds.
@@ -174,21 +176,23 @@ These are other applications I use.
 * Godots (Maxim Kovkel): manager for multiple versions of the Godot game engine editor.
 * HydraPaper (Gabriele Musco): selection of different wallpapers for multiple monitors.
 * Impression (Khaleel Al-Adhami): creates Linux boot drives.
+* Keypunch (Brage Fuglseth): check how fast you can type.
 * Krita (Krita Foundation): digital painting software with some image manipulations tools.
 * LosslessCut (Mikael Finstad): quick and easy editor for video files.
 * Minecraft (Mojang AB): official Minecraft launcher.
 * Minion (Good Game Mods, LLC): addon manager for The Elder Scrolls Online.
 * OpenRGB (Adam Honse, OpenRGB Team): manages RGB devices.
 * PDF Arranger (The PDF Arranger team): edits and resizes PDF files.
+* PDF Tricks (Murilo Venturoso): compresses PDF files.
+* Parabolic (Nickvision): downloads videos from the web.
 * Protontricks (Janne Pulkkinen): software to manage Steam's Proton game prefixes.
-* Solanum (Christopher Davis): pomodoro tracker to help with your tasks.
 * SoundConverter (Gautier Portet): multi format audio files converter.
 * Steam (Valve Corporation): Steam client.
 * Steam Link (Valve Corporation): application to receive straming signal from a Steam client.
 * Unity Hub (Unity Technologies): downloads and install versions of the Unity Editor for game making.
-* Video Downloader (Unrud): downloads video and audio from YouTube and other sources.
 * VSCodium (The VSCodium team): VSCode without Microsoft's telemetry.
 * WiVRn server (Guillaume Meunier, Patrick Nicolas et al): streaming tool for virtual and mixed reality headsets.
+* Xournal++ (Xournalpp Developers): note taking app for drawing tablets.
 
 ### Application specific fixes
 
@@ -295,6 +299,12 @@ PRESSURE_VESSEL_IMPORT_OPENXR_1_RUNTIMES=1 PRESSURE_VESSEL_FILESYSTEMS_RW=/var/l
 ```
 Open the WiVRn server on your computer and it will appear on the headset's client. If necessary (it may not be automatic), change the audio source on the computer for the one created by WiVRn.
 
+If you have a Meta Quest and want to use a USB connection (way less latency), first install the adb package:
+```
+sudo apt install adb
+```
+Then you need to enter the Meta Developers website (https://developers.meta.com/horizon/manage/) and create a organization for your account. Then use the Meta Horizon app on your smartphone, connect to your headset, go to options and activate developer mode. Restart your headset, connect the USB to the computer and WiVRn should detect it automatically.
+
 ## Configuration
 
 ### System
@@ -352,6 +362,22 @@ flatpak uninstall --unused
 ```
 
 ## Troubleshooting
+
+### Broken cache on GNOME Software
+
+Sometimes, the cache on GNOME Software breaks and icons stop loading at the store. First, stop any running proccess:
+```
+pkill gnome-software
+```
+Then clean the store cache:
+```
+rm -rf ~/.cache/gnome-software
+```
+Also on /var:
+```
+sudo rm -rf /var/cache/gnome-software
+```
+Now open GNOME Software again and let it recreate the icon cache.
 
 ### Steam game adjustments
 
