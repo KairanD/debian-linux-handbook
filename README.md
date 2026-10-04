@@ -1,8 +1,8 @@
 # Debian Linux Handbook
 
 - Written by: KairanD.
-- Version: 1.1.3.
-- Date: 2026/09/27.
+- Version: 1.1.4.
+- Date: 2026/10/04.
 - GNOME version: 48.
 - License: CC BY-SA 4.0. You may share and adapt the content with attribution, and derivative works must be released under the same license.
 
@@ -181,11 +181,16 @@ These are other applications I use.
 * LosslessCut (Mikael Finstad): quick and easy editor for video files.
 * Minecraft (Mojang AB): official Minecraft launcher.
 * Minion (Good Game Mods, LLC): addon manager for The Elder Scrolls Online.
+* OBS Studio (OBS Project): software to record and stream videos.
+* OnlyOffice (ONLYOFFICE): another office suite, better for Microsoft formats.
 * OpenRGB (Adam Honse, OpenRGB Team): manages RGB devices.
 * PDF Arranger (The PDF Arranger team): edits and resizes PDF files.
 * PDF Tricks (Murilo Venturoso): compresses PDF files.
 * Parabolic (Nickvision): downloads videos from the web.
+* Popsicle (System76): create bootable drives in parallel.
+* Proton VPN (Proton AG): easy VPN application.
 * Protontricks (Janne Pulkkinen): software to manage Steam's Proton game prefixes.
+* ProtonUp-Qt (DavidoTek): software to manage proton versions.
 * SoundConverter (Gautier Portet): multi format audio files converter.
 * Steam (Valve Corporation): Steam client.
 * Steam Link (Valve Corporation): application to receive straming signal from a Steam client.
@@ -359,6 +364,29 @@ sudo apt clean
 sudo apt update
 flatpak update
 flatpak uninstall --unused
+```
+
+### Error checking on EXT4 drives
+
+If you want to do a routine scan or if you suspect your partition has some issue, first list your devices:
+```
+lsblk -f
+```
+Then you need to unmount the partition (if you use LUKS to encrypt the drive, first open it using the key and then unmount the EXT4 partition inside LUKS). Change the path accordingly:
+```
+sudo umount /dev/path
+```
+Now, let's verify, using the parameter -f to force a scan even if the drive seems clean (without issues):
+```
+sudo fsck -f /dev/path
+```
+Check if any question about modifying the filesystem appears. To accept, type "y". If you want to automatically accept (this is dangerous, be careful), cancel the verification by pressing Ctrl + C and start it again adding the -y parameter:
+```
+sudo fsck -fy /dev/path
+```
+Then check the partition again to see if any issue remains (this may imply that the drive has some hardware-level damage, please always remember to do backups):
+```
+sudo fsck -f /dev/path
 ```
 
 ## Troubleshooting
