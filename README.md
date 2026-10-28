@@ -1,8 +1,8 @@
 # Debian Linux Handbook
 
 - Written by: KairanD.
-- Version: 1.1.5.
-- Date: 2026/10/18.
+- Version: 1.1.6.
+- Date: 2026/10/28.
 - GNOME version: 48.
 - License: CC BY-SA 4.0. You may share and adapt the content with attribution, and derivative works must be released under the same license.
 
@@ -41,7 +41,15 @@ After booting, choose "graphical expert install". Follow the instructions below 
 
 ### Installing the desktop environment and basic packages
 
-After rebooting, the system will enter CLI mode. Enter your username and password and install the packages below. First, we need to ensure the system is updated:
+After rebooting, the system will enter CLI mode. Enter your username and password and install the packages below. First, let's upgrade the APT sources to the new format:
+```
+sudo apt modernize-sources
+```
+Now, let's open our new created file:
+```
+sudo nano /etc/apt/sources.list.d/debian.sources
+```
+First, replace the word "trixie" with "stable". This way, the system will automatically update when a new Debian version is released. Also replace the ".gpg" key extension with the new ".pgp" format. Use Ctrl + O to save, and Ctrl + X to leave. Now we need to ensure the system is updated:
 ```
 sudo apt update && sudo apt upgrade
 ```
@@ -155,6 +163,7 @@ These are the essential applications I always install on my computers.
 * LibreOffice (The Document Foundation): complete office suite.
 * Mission Center (Mission Center Developers): shows usage of system resources and open processes.
 * Rhythmbox (The Rhythmbox developers): complete music player for local files.
+* Solanum (Christopher Davis): pomodoro timer.
 * VLC (VideoLAN et al.): the universal media player, with amazing compatibility.
 
 ### Other Flatpaks
@@ -169,6 +178,7 @@ These are other applications I use.
 * Descodificator (Bilal Elmoussaoui): reads and generates QR codes.
 * Discord (Discord Inc.): Discord client.
 * Earbud manager for Galaxy Buds (Tim Schneeberger): audio manager for Samsung's Galaxy Buds.
+* Eloquent (Sonny Piers): proofreading assistant for many languages.
 * Fragments (Felix Häcker): torrent downloader and manager.
 * Galaxy Buds Manager (Tim Schneeberger): software for configuring Galaxy Buds specific features.
 * GitHub Desktop (shiftkey): unofficial GitHub Linux client.
@@ -188,9 +198,8 @@ These are other applications I use.
 * Parabolic (Nickvision): downloads videos from the web.
 * Popsicle (System76): create bootable drives in parallel.
 * Proton VPN (Proton AG): easy VPN application.
+* ProtonPlus (Vysp3r): software to manage proton versions.
 * Protontricks (Janne Pulkkinen): software to manage Steam's Proton game prefixes.
-* ProtonUp-Qt (DavidoTek): software to manage proton versions.
-* Solanum (Christopher Davis): pomodoro timer.
 * SoundConverter (Gautier Portet): multi format audio files converter.
 * Steam (Valve Corporation): Steam client.
 * Steam Link (Valve Corporation): application to receive straming signal from a Steam client.
@@ -369,6 +378,10 @@ Run the following commands in sequence once a month to update and clean your sys
 sudo apt update
 sudo apt upgrade
 sudo apt autoremove
+apt list '?obsolete'
+sudo apt purge '?obsolete'
+apt list '?config-files'
+sudo apt purge '?config-files'
 sudo apt clean
 sudo apt update
 flatpak update
@@ -458,3 +471,10 @@ Win32UltraLowLatencyMode=0
 Minion is available to install at the Software application to manage AddOns. The folder's default location is `/home/arch/.var/app/com.valvesoftware.Steam/.steam/steam/steamapps/compatdata/306130/pfx/drive_c/users/steamuser/Documents/Elder Scrolls Online/live/AddOns/`.
 
 I also have an application to update Tamriel Trade Centre's (TTC) database. Check the tool's repository: https://github.com/kairand/ttc-eso-linux
+
+#### VRChat
+
+VRChat worlds may not play videos or music. To solve this, use ProtonPlus and install the latest Proton-GE RTSP version. It should detect your Steam install automatically, it's one click to install. Then open Steam, select VRChat's launch options and change the Proton version for the RTSP. Then, when preparing to play VRChat, close Steam and launch it with this option:
+```
+flatpak run com.valvesoftware.Steam steam://unlockh264/
+```
