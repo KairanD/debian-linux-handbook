@@ -1,8 +1,8 @@
 # Debian Linux Handbook
 
 - Written by: KairanD.
-- Version: 1.1.6.
-- Date: 2026/10/28.
+- Version: 1.1.7.
+- Date: 2026/10/29.
 - GNOME version: 48.
 - License: CC BY-SA 4.0. You may share and adapt the content with attribution, and derivative works must be released under the same license.
 
@@ -53,9 +53,9 @@ First, replace the word "trixie" with "stable". This way, the system will automa
 ```
 sudo apt update && sudo apt upgrade
 ```
-Then install a CLI system information tool, GNOME, a tweaks application, an extension to show tray icons, and Flatpak support (including a software store plugin):
+Then install a CLI system information tool, GNOME, a tweaks application, an extension to show tray icons, Flatpak support (including a software store plugin), and many firmwares:
 ```
-sudo apt install fastfetch gnome-core gnome-tweaks gnome-shell-extension-appindicator gnome-software-plugin-flatpak
+sudo apt install fastfetch gnome-core gnome-tweaks gnome-shell-extension-appindicator gnome-software-plugin-flatpak firmware-linux
 ```
 To have a dock, install the Dash to Dock extension:
 ```
@@ -102,6 +102,21 @@ sudo chmod 600 /swapfile
 sudo mkswap /swapfile
 sudo swapon /swapfile
 echo '/swapfile none swap sw 0 0' | sudo tee -a /etc/fstab
+```
+
+### Configure boot splash screen
+
+To hide text and show a graphical splash screen during boot or shutdown, run this command:
+```
+echo -n ' quiet splash' | sudo tee -a /etc/kernel/cmdline
+```
+Now let's install more themes:
+```
+sudo apt install plymouth-themes
+```
+Select the default theme (the one that shows the computer brand logo with a loading indicator) and recreate your entries:
+```
+sudo plymouth-set-default-theme -R bgrt
 ```
 
 ### Enable VRR support on GNOME
@@ -378,9 +393,7 @@ Run the following commands in sequence once a month to update and clean your sys
 sudo apt update
 sudo apt upgrade
 sudo apt autoremove
-apt list '?obsolete'
 sudo apt purge '?obsolete'
-apt list '?config-files'
 sudo apt purge '?config-files'
 sudo apt clean
 sudo apt update
